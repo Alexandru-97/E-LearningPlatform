@@ -1,9 +1,9 @@
 package model;
 
-public class User {
+public class User implements Comparable<User>{
 
     private int id;
-    private String Name;
+    private String name;
     protected boolean isPremium;
 
 
@@ -16,11 +16,11 @@ public class User {
     }
 
     public String getName() {
-        return Name;
+        return name;
     }
 
     public void setName(String name) {
-        Name = name;
+        this.name = name;
     }
 
     public boolean isPremium() {
@@ -32,4 +32,20 @@ public class User {
     }
 
 
+    @Override
+    public int compareTo(User user)
+    {
+        if(this.name.charAt(0) > user.name.charAt(0))
+        {
+            return 1;
+        }
+        else if (this.name.charAt(0) == user.name.charAt(0))
+        {
+            return 0;
+        }
+        else
+        {
+            return -1;
+        }
+    }
 }

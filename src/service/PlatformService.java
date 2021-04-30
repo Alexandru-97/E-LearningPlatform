@@ -2,19 +2,24 @@ package service;
 
 import model.*;
 
-import java.util.Arrays;
+import java.text.SimpleDateFormat;
+import java.util.*;
 
 public class PlatformService
 {
+    private NotificationService notificationService;
+    public PlatformService(NotificationService notificationService) {
+        this.notificationService = notificationService;
+    }
 
     public void addUser(ELearningPlatform platform, User user)
     {
-        int len = platform.getUsers().length;
-        User [] aux = new User [len + 1];
-        for (int i = 0; i < len; i++)
-            aux[i] = platform.getUsers()[i];
-        aux[len] = user;
-        platform.setUsers(aux);
+        List<User> users = platform.getUsers();
+        users.add(user);
+        platform.setUsers(users);
+        String message = "add user";
+        String timeStamp = new SimpleDateFormat("yyyy.MM.dd.HH.mm.ss").format(new java.util.Date());
+        notificationService.sendNotification(new Notification(message, timeStamp));
     }
 
     public void printUsers(ELearningPlatform platform)
@@ -24,7 +29,7 @@ public class PlatformService
             if (user != null)
             {
                 System.out.println(user.getName());
-                if (user.isPremium() == true)
+                if (user.isPremium())
                 {
                     System.out.println("Utilizatorul are cont premium");
                     // celelalte chestii de la premiumuser
@@ -39,12 +44,12 @@ public class PlatformService
 
     public void addTeacher(ELearningPlatform platform, Teacher teacher)
     {
-        int len = platform.getTeachers().length;
-        Teacher [] aux = new Teacher [len + 1];
-        for (int i = 0; i < len; i++)
-            aux[i] = platform.getTeachers()[i];
-        aux[len] = teacher;
-        platform.setTeachers(aux);
+        List<Teacher> teachers = platform.getTeachers();
+        teachers.add(teacher);
+        platform.setTeachers(teachers);
+        String message = "add teacher";
+        String timeStamp = new SimpleDateFormat("yyyy.MM.dd.HH.mm.ss").format(new java.util.Date());
+        notificationService.sendNotification(new Notification(message, timeStamp));
     }
 
     public void addCategory(ELearningPlatform platform, Category category)
@@ -55,6 +60,9 @@ public class PlatformService
             aux[i] = platform.getCategories()[i];
         aux[len] = category;
         platform.setCategories(aux);
+        String message = "add category";
+        String timeStamp = new SimpleDateFormat("yyyy.MM.dd.HH.mm.ss").format(new java.util.Date());
+        notificationService.sendNotification(new Notification(message, timeStamp));
     }
 
     public void printCategories(ELearningPlatform platform)
@@ -76,6 +84,9 @@ public class PlatformService
             aux[i] = platform.getCourses()[i];
         aux[len] = course;
         platform.setCourses(aux);
+        String message = "add course";
+        String timeStamp = new SimpleDateFormat("yyyy.MM.dd.HH.mm.ss").format(new java.util.Date());
+        notificationService.sendNotification(new Notification(message, timeStamp));
     }
 
     public void printCourses(ELearningPlatform platform)
@@ -99,6 +110,9 @@ public class PlatformService
             aux[i] = course.getQuizzes()[i];
         aux[len] = quiz;
         course.setQuizzes(aux);
+        String message = "add quiz";
+        String timeStamp = new SimpleDateFormat("yyyy.MM.dd.HH.mm.ss").format(new java.util.Date());
+        notificationService.sendNotification(new Notification(message, timeStamp));
     }
 
     public void printQuizzes(Course course)

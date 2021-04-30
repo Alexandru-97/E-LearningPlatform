@@ -1,11 +1,14 @@
 package model;
 
+
+import java.util.*;
+
 public class ELearningPlatform {
 
     protected Category [] categories = new Category[100];
     protected Course [] courses = new Course [100];
-    protected Teacher [] teachers = new Teacher [100];
-    protected User [] users = new User[100];
+    protected List<Teacher> teachers = new ArrayList<>();
+    protected List<User> users = new ArrayList<>();
 
     public Category[] getCategories() {
         return categories;
@@ -23,19 +26,19 @@ public class ELearningPlatform {
         this.courses = courses;
     }
 
-    public Teacher[] getTeachers() {
+    public List<Teacher> getTeachers() {
         return teachers;
     }
 
-    public void setTeachers(Teacher[] teachers) {
+    public void setTeachers(List<Teacher> teachers) {
         this.teachers = teachers;
     }
 
-    public User[] getUsers() {
+    public List<User> getUsers() {
         return users;
     }
 
-    public void setUsers(User[] users) {
+    public void setUsers(List<User> users) {
         this.users = users;
     }
 }

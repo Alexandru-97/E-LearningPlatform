@@ -3,12 +3,18 @@ package main;
 import model.*;
 import service.*;
 
+import java.text.SimpleDateFormat;
+import java.util.Collections;
+import java.util.List;
+
 public class Main
 {
     public static void main(String[] args)
     {
-        PlatformService platformService = new PlatformService();
+        NotificationService notificationService = new NotificationService();
+        PlatformService platformService = new PlatformService(notificationService);
         ELearningPlatform platform = new ELearningPlatform();
+
 
         //adaugare categorie
         Category category = new Category();
@@ -27,7 +33,7 @@ public class Main
         //printare curs
         platformService.printCourses(platform);
 
-        QuizService quizService = new QuizService();
+        QuizService quizService = new QuizService(notificationService);
         Quiz quiz = new Quiz();
         quiz.setSubject("Sorting Alghoritms");
 
@@ -71,14 +77,26 @@ public class Main
         user2.setName("Dorel");
         user2.setPremium(false);
 
+        User user3 = new User();
+        user3.setName("Andrei");
+        user3.setPremium(false);
+
+
 
         platformService.addUser(platform, user);
         platformService.addUser(platform, user2);
+        platformService.addUser(platform, user3);
+
+        List<User> users = platform.getUsers();
+
 
         //Afisez toti utilizatorii din aplicatie
         platformService.printUsers(platform);
+        notificationService.viewNotifications("resources/notifications/notifications.csv");
 
-
+        Collections.sort(users);
+        System.out.println("Users sorted by name:");
+        users.forEach(u-> System.out.println(u.getName()));
 
     }
 }
