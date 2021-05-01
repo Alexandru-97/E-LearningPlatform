@@ -6,9 +6,11 @@ import java.text.SimpleDateFormat;
 public class QuizService
 {
 
-    private NotificationService notificationService;
-    public QuizService(NotificationService notificationService) {
-        this.notificationService = notificationService;
+    private static final QuizService SINGLETON = new QuizService(NotificationService.getInstance());
+    private QuizService(NotificationService instance){}
+    public static QuizService getInstance()
+    {
+        return SINGLETON;
     }
 
     public void addQuestion(Quiz quiz, String question)
@@ -21,7 +23,7 @@ public class QuizService
         quiz.setQuestions(aux);
         String message = "add question in quiz";
         String timeStamp = new SimpleDateFormat("yyyy.MM.dd.HH.mm.ss").format(new java.util.Date());
-        notificationService.sendNotification(new Notification(message, timeStamp));
+        NotificationService.getInstance().sendNotification(new Notification(message, timeStamp));
     }
 
     public void addAnswers(Quiz quiz, String answer)
@@ -34,7 +36,7 @@ public class QuizService
         quiz.setAnswers(aux);
         String message = "add answer in quiz";
         String timeStamp = new SimpleDateFormat("yyyy.MM.dd.HH.mm.ss").format(new java.util.Date());
-        notificationService.sendNotification(new Notification(message, timeStamp));
+        NotificationService.getInstance().sendNotification(new Notification(message, timeStamp));
     }
 
 }

@@ -14,6 +14,14 @@ import model.Notification;
 
 public class NotificationService
 {
+
+    private static final NotificationService SINGLETON = new NotificationService();
+    private NotificationService(){}
+    public static NotificationService getInstance()
+    {
+        return SINGLETON;
+    }
+
     private static final String DIRECTORY_PATH = "resources/notifications";
     private static final String FILE_PATH = DIRECTORY_PATH + "/notifications.csv";
 

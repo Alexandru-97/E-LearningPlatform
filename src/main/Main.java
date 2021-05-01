@@ -11,8 +11,12 @@ public class Main
 {
     public static void main(String[] args)
     {
-        NotificationService notificationService = new NotificationService();
-        PlatformService platformService = new PlatformService(notificationService);
+
+
+
+
+        NotificationService notificationService =  NotificationService.getInstance();
+        PlatformService platformService = PlatformService.getInstance();
         ELearningPlatform platform = new ELearningPlatform();
 
 
@@ -33,7 +37,7 @@ public class Main
         //printare curs
         platformService.printCourses(platform);
 
-        QuizService quizService = new QuizService(notificationService);
+        QuizService quizService = QuizService.getInstance();
         Quiz quiz = new Quiz();
         quiz.setSubject("Sorting Alghoritms");
 
@@ -67,8 +71,19 @@ public class Main
         platformService.addQuiz(course2, quiz);
         platformService.printQuizzes(course2);
 
+        //citesc utilizatori din csv
+        platformService.readUsers(platform);
+        System.out.println("\nUtilizatorii cititi din fisier:");
+        platformService.printUsers(platform);
 
-        //adaug utilizatori noi in aplicatie
+        //citesc profesori din csv
+        platformService.readTeachers(platform);
+        System.out.println("\nProfesorii cititi din fisier:");
+        platformService.printTeachers(platform);
+
+
+
+        /*//adaug utilizatori noi in aplicatie
         User user = new User();
         user.setName("Gigel");
         user.setPremium(true);
@@ -85,17 +100,17 @@ public class Main
 
         platformService.addUser(platform, user);
         platformService.addUser(platform, user2);
-        platformService.addUser(platform, user3);
+        platformService.addUser(platform, user3);*/
 
         List<User> users = platform.getUsers();
 
 
         //Afisez toti utilizatorii din aplicatie
-        platformService.printUsers(platform);
-        notificationService.viewNotifications("resources/notifications/notifications.csv");
+        //platformService.printUsers(platform);
+        //notificationService.viewNotifications("resources/notifications/notifications.csv");
 
         Collections.sort(users);
-        System.out.println("Users sorted by name:");
+        System.out.println("\nUsers sorted by name:");
         users.forEach(u-> System.out.println(u.getName()));
 
     }

@@ -4,7 +4,7 @@ public class Course {
 
     private int id;
     private String name;
-    protected int duration;
+    protected int duration; //in ore
     protected Quiz [] quizzes = new Quiz[100];
 
 
