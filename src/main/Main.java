@@ -6,20 +6,23 @@ import service.*;
 import java.text.SimpleDateFormat;
 import java.util.Collections;
 import java.util.List;
+import java.util.Scanner;
 
 public class Main
 {
     public static void main(String[] args)
     {
-
-
-
-
         NotificationService notificationService =  NotificationService.getInstance();
         PlatformService platformService = PlatformService.getInstance();
+        CategoryService categoryService = new CategoryService();
+        UserService userService = new UserService();
+
+        Scanner scanner = new Scanner(System.in);
+
+
         ELearningPlatform platform = new ELearningPlatform();
 
-
+/*
         //adaugare categorie
         Category category = new Category();
         category.setName("Computer Science");
@@ -83,7 +86,7 @@ public class Main
 
 
 
-        /*//adaug utilizatori noi in aplicatie
+        //adaug utilizatori noi in aplicatie
         User user = new User();
         user.setName("Gigel");
         user.setPremium(true);
@@ -100,7 +103,7 @@ public class Main
 
         platformService.addUser(platform, user);
         platformService.addUser(platform, user2);
-        platformService.addUser(platform, user3);*/
+        platformService.addUser(platform, user3);
 
         List<User> users = platform.getUsers();
 
@@ -112,6 +115,92 @@ public class Main
         Collections.sort(users);
         System.out.println("\nUsers sorted by name:");
         users.forEach(u-> System.out.println(u.getName()));
+        */
 
+//etapa 3 proiect
+
+
+        while(true) {
+            System.out.println("Please type one of the following commands: add, delete,  get, get total amount, exit");
+            String line = scanner.nextLine();
+            switch (line) {
+                case "add user" -> {
+                    addUser(userService, scanner);
+                    break;
+                }
+                case "add category" -> {
+                    addCategory(categoryService, scanner);
+                    break;
+                }
+                case "delete category" -> {
+                    deleteCategory(categoryService, scanner);
+                    break;
+                }
+                case "delete user" -> {
+                    deleteUser(userService, scanner);
+                    break;
+                }
+                case "get total amount" -> {
+                    break;
+                }
+                case "exit" -> {
+                    System.out.println("Bye...");
+                    System.exit(0);
+                }
+                default -> System.out.println("This command doesn't exist.");
+            }
+        }
+    }
+
+    private static void addCategory(CategoryService categoryService, Scanner scanner) {
+
+        System.out.println("Please specify the category details: name");
+        try {
+            Category category = categoryService.build(scanner.nextLine());
+            categoryService.addCategory(category);
+        } catch (NumberFormatException e) {
+            System.out.println("Invalid inputs for category creation. The category was not saved in the db.");
+        } catch (ArrayIndexOutOfBoundsException e) {
+            System.out.println("Not enough inputs for category creation. The category was not saved in the db.");
+        }
+    }
+
+    private static void addUser(UserService userService, Scanner scanner) {
+
+        System.out.println("Please specify the user details: name/premium status(boolean)");
+        try {
+            User user = userService.build(scanner.nextLine());
+            userService.addUser(user);
+        } catch (NumberFormatException e) {
+            System.out.println("Invalid inputs for user creation. The user was not saved in the db.");
+        } catch (ArrayIndexOutOfBoundsException e) {
+            System.out.println("Not enough inputs for user creation. The category was not saved in the db.");
+        }
+    }
+    private static void deleteCategory(CategoryService categoryService, Scanner scanner) {
+
+        System.out.println("Please specify the category details: name");
+        try {
+            Category category = categoryService.build(scanner.nextLine());
+            categoryService.deleteCategory(category);
+        } catch (NumberFormatException e) {
+            System.out.println("Invalid inputs for category deletion.");
+        } catch (ArrayIndexOutOfBoundsException e) {
+            System.out.println("Not enough inputs for category deletion.");
+        }
+    }
+    private static void deleteUser(UserService userService, Scanner scanner) {
+
+        System.out.println("Please specify the user details: name");
+        try {
+            String name = scanner.nextLine();
+            System.out.println(name);
+            User user = new User(name);
+            userService.deleteUser(user);
+        } catch (NumberFormatException e) {
+            System.out.println("Invalid inputs for user deletion.");
+        } catch (ArrayIndexOutOfBoundsException e) {
+            System.out.println("Not enough inputs for user deletion.");
+        }
     }
 }

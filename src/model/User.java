@@ -6,6 +6,17 @@ public class User implements Comparable<User>{
     private String name;
     protected boolean isPremium;
 
+    public User(String name, Boolean isPremium) {
+        this.name = name;
+        this.isPremium = isPremium;
+    }
+    public User(String name){
+        this.name = name;
+    }
+
+    public User(){
+
+    }
 
     public int getId() {
         return id;

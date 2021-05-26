@@ -1,0 +1,1 @@
+{--crearea tabelelor si queryurile le am facut direct in mySql workbench
